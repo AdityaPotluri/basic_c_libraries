@@ -1,60 +1,52 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "resizable_array.h"
 
 
-typedef struct vector {
-    int* arr;
-    int size;
-    int capacity;
-} vector;
-vector new (int size);
 
 int main() {
-    vector* vector = new(10);
-
-    for(int i = 0; i < 10000; i++) {
-        append(vector, 99);
+    vector vec = new(10);
+    
+    for (int i = 0; i < 1000; i++) {
+        append(&vec, 99);
     }
-
-    for(int i = 0; i < 10000; i++) {
-        printf("%d", vector->arr[i]);
+    
+    for (int i = 0; i < 1000; i++) {
+        printf("%d \n", vec.arr[i]);
     }
+    
 
     return 0;
 }
 
-vector* new(int capacity) {
-    vector* vec;
-    vec->arr = calloc(size, sizeof(int));
-    if (!vec->arr) {
-        stderr("cannot allocate vector");
-        return NULL;
+vector new(int capacity) {
+    vector vec;
+    vec.arr = calloc(capacity, sizeof(int));
+    if (!vec.arr) {
+        return vec;
     }
-    vec->capacity = capacity;
-    vec->size = 0;
+    vec.capacity = capacity;
+    vec.size = 0;
     return vec;
 }
 
-vector* resize(vector* vec) {
-    vec->array = realloc(vec->array, vec->capacity * 2);
-    if(!vec->array) {
-        return NULL;
-    }
+void resize(vector* vec) {
     vec->capacity *= 2;
-    return vec;
-}
-
-vector* append(vector* vec, int a) {
-    if(vec->size == vec->capacity) {
-        vec = resize(vec);
-        if(vec == NULL) {
-            stderr("could not malloc vector");
-            return NULL;
-        }
+    vec->arr = realloc(vec->arr, vec->capacity);
+    if(!vec->arr) {
+        printf("ERROR: Failed to resize");
+        return;
     }
-
-    vec->array[vec->size++] = a;
-    return vec;
-
+    
 }
+
+void append(vector* vec, int a) {
+    if (vec->size == vec->capacity) {
+        resize(vec);
+    }
+    vec->arr[vec->size] = a;
+    vec->size++;
+    printf("%d %d\n", vec->arr[vec->size-1], vec->size);
+}
+
 

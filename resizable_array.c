@@ -5,14 +5,16 @@
 
 
 int main() {
-    vector vec = new(10);
+    vector vec = new(100);
     
     for (int i = 0; i < 1000; i++) {
-        append(&vec, 99);
+        vec.arr[i] = 99;
     }
     
-    for (int i = 0; i < 1000; i++) {
-        printf("%d \n", vec.arr[i]);
+    
+
+    for(int i = 0; i < 1000; i++) {
+        printf("%d ", vec.arr[i]);
     }
     
 
@@ -31,13 +33,13 @@ vector new(int capacity) {
 }
 
 void resize(vector* vec) {
-    vec->capacity *= 2;
-    vec->arr = realloc(vec->arr, vec->capacity);
+    
+    vec->arr = realloc(vec->arr, vec->capacity * 2);
     if(!vec->arr) {
         printf("ERROR: Failed to resize");
         return;
     }
-    
+    vec->capacity = vec->capacity * 2;
 }
 
 void append(vector* vec, int a) {

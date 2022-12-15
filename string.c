@@ -39,7 +39,9 @@ int strcmpn(const char *s1, const char *s2, int n) {
 
 char* strchr(const char *s, const char b) {
     int i = 0;
-    while(s[i] != NULL && i < strlen(s)) {
-
+    for(int i = 0; i < strlen(s); i++) {
+        if(s[i] == b) {
+            return s + i;
+        }
     }
 }

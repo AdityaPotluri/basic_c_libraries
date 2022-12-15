@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "cstring": "c",
-        "locale": "c"
+        "locale": "c",
+        "tree.h": "c"
     }
 }
